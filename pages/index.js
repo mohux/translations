@@ -1,16 +1,17 @@
-import Head from 'next/head';
-import { initialLocale } from '../locales/inital';
-import { useRouter } from 'next/dist/client/router';
-
+import Head from "next/head";
+import { getInitialLocale } from "../locales/config";
+import { useRouter } from "next/dist/client/router";
 const Index = () => {
-    const router = useRouter();
-    React.useEffect(() => {
-        router.replace('/[lang]', `/${initialLocale}`);
-    });
+  const router = useRouter();
+  React.useEffect(() => {
+    router.replace(`/${getInitialLocale()}`);
+  });
 
-    return (<Head>
-        <meta name="robots" content="noindex, nofollow" />
-    </Head>);
-}
+  return (
+    <Head>
+      <meta name="robots" content="noindex, nofollow" />
+    </Head>
+  );
+};
 
 export default Index;

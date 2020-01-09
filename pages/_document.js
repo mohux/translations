@@ -1,19 +1,23 @@
 import Document, { Head, Main, NextScript } from "next/document";
-export default class EvexDocument extends Document {
-    render() {
-        return (
-            <html lang="en">
-                <Head>
-                    <meta charSet="utf-8" />
-                    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
-                    <link rel="stylesheet" href="/lib/boostrap-ar.min.css" />
-                </Head>
-                <body>
-                    <Main />
-                    <NextScript />
-                </body>
-            </html>
-        );
-    }
+// import Manifest from 'next-manifest/manifest';
+export default class EKafu extends Document {
+  render() {
+    const lang = this.props.__NEXT_DATA__.props.lang;
+
+    return (
+      <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width,minimum-scale=1,initial-scale=1"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    );
+  }
 }

@@ -1,14 +1,28 @@
-import Link from 'next/link';
-import { Fragment } from 'react';
-import MetaHead from '~/components/shared/meta';
-import useTranslation from '../../components/shared/locales/useLocale';
-import WithLocale from '../../components/shared/locales/withLocale';
-
+import { useMobxStores } from "~/stores/index";
+import Posts from "~/components/posts";
+import { withLocale, useLocale } from "~/locales";
+import Layout from "~/components/layout";
+import { Button } from "reactstrap";
 const Index = () => {
-    const { locale, translate } = useTranslation();
-    return (<Fragment>
-        <MetaHead title={translate('hello')} />
-    </Fragment>);
-}
+  const { postsStore } = useMobxStores();
+  const { translate } = useLocale();
+  const showMoreHandler = () => {
+    postsStore.loadMore();
+  };
+  return (
+    <Layout>
+      <Button onClick={showMoreHandler}>
+      {translate({ key: "home" })}
+      </Button>
+      <Posts />
+    </Layout>
+  );
+};
 
-export default WithLocale(Index);
+Index.getInitialProps = async ({ mobxStore }) => {
+  await mobxStore.postsStore.fetchPosts();
+  return {
+    done: true
+  };
+};
+export default withLocale(Index);
