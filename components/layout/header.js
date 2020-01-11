@@ -1,47 +1,48 @@
-import {useState} from 'react';
-import "./styles/header.scss";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
-import Link from 'next/link';
+import { Fragment, useState } from "react";
+import NextLink from "../shared/link";
+import Translate from "../shared/translate";
+import { useLocale } from "~/locales";
 import LocaleSwitcher from '../shared/localeSwitcher';
-import {useLocale}  from '~/locales';
-const Header = props => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { locale} = useLocale();
-  const toggle = () => setIsOpen(!isOpen);
+import '~/components/layout/styles/header.scss'
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    Nav,
+    NavItem,
+} from 'reactstrap';
 
-  return (
-    <header>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <Link   href={`/${locale}/about`}>
-                <a className="nav-link">
-                About
-                </a>
-              </Link>
-            </NavItem>
-            <NavItem>
-              <LocaleSwitcher/>
-            </NavItem>
-          </Nav>
-        </Collapse>
-      </Navbar>
-    </header>
-  );
-};
+const links = [
+    { href: '/', text: <Translate id="home" />, },
+    { href: '/about', text: <Translate id="about" />, },
+    { href: '/contact', text: <Translate id="contact" />, },
+];
+
+const Header = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+    return (
+        <header className="header">
+            {/* <style jsx>{`
+                  @import 'components/layout/styles/header.scss';
+            `}</style> */}
+            <Navbar dark expand="md">
+                <NextLink className="navbar-brand" href="/">reactstrap</NextLink>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        {links.map((link, idx) => <NavItem key={idx}>
+                            <NextLink className="nav-link" href={link.href} activeClassName="active">
+                                {link.text}
+                            </NextLink>
+                        </NavItem>)}
+                    </Nav>
+                    <LocaleSwitcher />
+                </Collapse>
+            </Navbar>
+        </header>
+    )
+}
 
 export default Header;

@@ -1,28 +1,23 @@
-import { useMobxStores } from "~/stores/index";
-import Posts from "~/components/posts";
-import { withLocale, useLocale } from "~/locales";
-import Layout from "~/components/layout";
-import { Button } from "reactstrap";
-const Index = () => {
-  const { postsStore } = useMobxStores();
-  const { translate } = useLocale();
-  const showMoreHandler = () => {
-    postsStore.loadMore();
-  };
-  return (
-    <Layout>
-      <Button onClick={showMoreHandler}>
-      {translate({ key: "home" })}
-      </Button>
-      <Posts />
-    </Layout>
-  );
-};
+import Translate from "~/components/shared/translate";
+import MetaHead from "~/components/shared/meta";
+import { useLocale } from "~/locales";
+import { PUBLIC_URL } from "~/env";
+import { useRouter } from 'next/router';
 
-Index.getInitialProps = async ({ mobxStore }) => {
-  await mobxStore.postsStore.fetchPosts();
-  return {
-    done: true
-  };
-};
-export default withLocale(Index);
+const Index = () => {
+    const { translate } = useLocale();
+    const router = useRouter();
+    return (<div>
+        <MetaHead title={translate({ key: 'home' })}
+            description={translate({ key: 'home' })}
+            robots="index, follow"
+            ogUrl={PUBLIC_URL + router.asPath}
+            keywords={translate({ key: 'home' })}
+            ogDescription={translate({ key: 'home' })}
+            ogTitle={translate({ key: 'home' })} />
+        <img className="img-fluid" src="/images/2.jpg" title="Boilerplate" alt="Boilerplate" />
+    </div>)
+}
+
+
+export default Index;

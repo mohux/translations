@@ -1,23 +1,25 @@
-import Document, { Head, Main, NextScript } from "next/document";
-// import Manifest from 'next-manifest/manifest';
-export default class EKafu extends Document {
-  render() {
-    const lang = this.props.__NEXT_DATA__.props.lang;
+import Document, { Head, Main, NextScript, Html } from "next/document";
+import { directions } from '../locales/translation';
 
-    return (
-      <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
-        <Head>
-          <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="width=device-width,minimum-scale=1,initial-scale=1"
-          />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </html>
-    );
-  }
+// import Manifest from 'next-manifest/manifest';
+export default class NextDocument extends Document {
+    render() {
+        const lang = this.props.__NEXT_DATA__.props.lang;
+        return (
+            <Html lang={lang} dir={directions[lang] || 'ltr'}>
+                <Head>
+                    <meta charSet="utf-8" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width,minimum-scale=1,initial-scale=1"
+                    />
+                    
+                </Head>
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        );
+    }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import Error from "next/error";
-import { isAllowedLocale, fallbackLocale } from "./config";
+import { isAllowedLocale, getInitialLocale } from "./config";
 import { LocaleProvider } from "./localeContext";
 
 export default WrappedPage => {
@@ -23,16 +23,16 @@ export default WrappedPage => {
       pageProps = await WrappedPage.getInitialProps(ctx);
     }
 
-    if (
-      typeof ctx.query.lang !== "string" ||
-      !isAllowedLocale(ctx.query.lang)
-    ) {
-      // in case the value of 'lang' is not a valid locale return it as undefined
+
+    if (typeof pageProps.lang !== "string") {
+      return { ...pageProps, locale: getInitialLocale(ctx) };
+    }
+    if (!isAllowedLocale(pageProps.lang)) {
       return { ...pageProps, locale: undefined };
     }
 
     // the locale is valid
-    return { ...pageProps, locale: ctx.query.lang };
+    return { ...pageProps, locale: pageProps.lang };
   };
 
   return WithLocale;

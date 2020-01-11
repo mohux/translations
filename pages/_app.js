@@ -1,41 +1,38 @@
 import App from "next/app";
-import initializeStore, { StoreProvider } from "../stores";
-import Head from "next/head";
+import { directions } from '../locales/translation';
+import { withLocale } from "~/locales";
+import Head from 'next/head';
+import Layout from "~/components/layout";
+import { Fragment } from "react";
+import { PUBLIC_URL } from '../env';
 class MyApp extends App {
-  static async getInitialProps(context) {
-    const mobxStore = initializeStore();
-    context.ctx.mobxStore = mobxStore;
-    const props = await App.getInitialProps(context);
-    const lang = context.ctx.query.lang;
-    return {
-      ...props,
-      initialMobx: mobxStore,
-      lang
-    };
-  }
+    static async getInitialProps(context) {
+        const props = await App.getInitialProps(context);
+        const lang = context.ctx.query.lang;
+        const path = context.ctx.asPath;
+        return {
+            ...props,
+            lang,
+            path,
+        };
+    }
 
-  // constructor(props) {
-  //   super(props);
-  //   const isServer = typeof window === "undefined";
-  //   this.mobxStore = isServer
-  //     ? props.initialMobx
-  //     : initializeStore(props.initialMobx);
-  // }
-  render() {
-    const { Component, pageProps, initialMobx, lang } = this.props;
-    const stores = initializeStore(initialMobx);
-    return (
-      <StoreProvider store={stores}>
-        <Head>
-        {lang === "ar" ? (
-            <link rel="stylesheet" href="/bootstrap/bootstrap-rtl.min.css" />
-          ) : (
-            <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
-          )}
-        </Head>
-        <Component {...pageProps} />
-      </StoreProvider>
-    );
-  }
+    render() {
+        const { Component, pageProps, lang, path } = this.props;
+        const WebLayout = path === '/' ? Fragment : Layout;
+        return (
+            <WebLayout>
+                <Head>
+                    {directions[lang] === "rtl" ? (
+                        <link type="text/css" rel="stylesheet" href={`${PUBLIC_URL}/bootstrap/bootstrap-rtl.min.css`} hrefLang={lang} />
+                    ) :
+                        (
+                            <link type="text/css" rel="stylesheet" href={`${PUBLIC_URL}/bootstrap/bootstrap.min.css`} hrefLang={lang} />
+                        )}
+                </Head>
+                <Component   {...pageProps} />
+            </WebLayout>
+        );
+    }
 }
-export default MyApp;
+export default withLocale(MyApp);

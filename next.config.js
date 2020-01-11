@@ -1,12 +1,15 @@
 const withSass = require("@zeit/next-sass");
-const withCSS = require("@zeit/next-css");
 const path = require("path");
 // const webpack = require("webpack");
-module.exports = withCSS(
-  withSass({
-    webpack(config) {
-      config.resolve.alias["~"] = path.resolve(__dirname);
-      return config;
+
+
+const PUBLIC_URL = 'http://localhost:3000';
+
+module.exports = withSass({
+    assetPrefix: PUBLIC_URL,
+    webpack(config, options) {
+        config.resolve.alias["~"] = path.resolve(__dirname);
+        return config;
     }
-  })
-);
+});
+

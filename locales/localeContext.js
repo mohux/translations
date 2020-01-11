@@ -1,5 +1,6 @@
 import { useRouter } from "next/dist/client/router";
-import { isAllowedLocale } from "./config";
+import { isAllowedLocale,localeCookiesAge } from "./config";
+import cookies from 'js-cookies';
 export const LocaleContext = React.createContext({
   locale: "en",
   setLocale: () => null
@@ -10,8 +11,8 @@ export const LocaleProvider = ({ lang, children }) => {
   const router = useRouter();
   // store the preference
   React.useEffect(() => {
-    if (locale !== localStorage.getItem("locale")) {
-      localStorage.setItem("locale", locale);
+    if (locale !== cookies.getItem("locale")) {
+      cookies.setItem("locale", locale, localeCookiesAge);
     }
   }, [locale]);
   // sync locale value on client-side route changes
