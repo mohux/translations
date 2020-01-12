@@ -6,6 +6,8 @@ import Layout from "~/components/layout";
 import { Fragment } from "react";
 import { PUBLIC_URL, GOOGLE_ANALYTICS_UA } from "../env";
 import { initGA } from "~/helpers/analytics";
+import '~/scss/web.scss';
+
 class MyApp extends App {
   static async getInitialProps(context) {
     const props = await App.getInitialProps(context);

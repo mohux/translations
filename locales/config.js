@@ -4,6 +4,7 @@ export const defaultLocale = "en";
 export const localeCookiesAge = 7;
 
 // * Defining active locales in the app
+
 export const locales = ["ar", "en"];
 
 export const isAllowedLocale = lang => locales.includes(lang);

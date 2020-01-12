@@ -1,8 +1,8 @@
 
 const Footer = () => {
 
-    return (<footer>
-
+    return (<footer className="text-center">
+        Copyright {new Date().getFullYear()}
     </footer>)
 }
 

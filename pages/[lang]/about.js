@@ -6,11 +6,13 @@ const About = () => {
     const { translate } = useLocale();
 
     return (<div>
+        
         <MetaHead title={translate({ key: 'about' })}
             description={translate({ key: 'about' })}
             ogDescription={translate({ key: 'about' })}
             ogTitle={translate({ key: 'about' })} />
-        <Translate id="about" wrapperComponent={React.Fragment} />
+            
+        <Translate id="about3" wrapperComponent={React.Fragment} />
     </div>)
 }
 
