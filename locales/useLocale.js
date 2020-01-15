@@ -9,7 +9,6 @@ export default function useTranslation() {
   function translate({ key, fallback }) {
     if (!strings[locale][key] && fallback) {
       console.warn(`Translation '${key}' for locale '${locale}' using fallback attribute instead`);
-
       return fallback;
     }
     if (!strings[locale][key] && !fallback) {

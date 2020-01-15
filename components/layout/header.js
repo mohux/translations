@@ -1,7 +1,6 @@
 import { Fragment, useState } from "react";
 import NextLink from "../shared/link";
 import Translate from "../shared/translate";
-import { useLocale } from "~/locales";
 import LocaleSwitcher from '../shared/localeSwitcher';
 import '~/components/layout/styles/header.scss'
 import {
@@ -16,6 +15,7 @@ const links = [
     { href: '/', text: <Translate id="home" />, },
     { href: '/about', text: <Translate id="about" />, },
     { href: '/contact', text: <Translate id="contact" />, },
+    { href: '/blog/[slug]', as:'/blog/عنوان-بالعربي', text: 'Blog test', },
 ];
 
 const Header = () => {
@@ -33,7 +33,7 @@ const Header = () => {
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         {links.map((link, idx) => <NavItem key={idx}>
-                            <NextLink className="nav-link" href={link.href} activeClassName="active">
+                            <NextLink className="nav-link" href={link.href} as={link.as} activeClassName="active">
                                 {link.text}
                             </NextLink>
                         </NavItem>)}

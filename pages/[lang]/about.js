@@ -12,7 +12,7 @@ const About = () => {
             ogDescription={translate({ key: 'about' })}
             ogTitle={translate({ key: 'about' })} />
             
-        <Translate id="about3" wrapperComponent={React.Fragment} />
+        <Translate id="about" wrapperComponent={React.Fragment} />
     </div>)
 }
 
